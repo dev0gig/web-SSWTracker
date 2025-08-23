@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schwangerschafts-Begleiter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen antialiased text-sm md:text-base">
+
+    <div id="app-container" class="max-w-4xl mx-auto p-4">
+        
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="min-h-screen flex items-center justify-center">
+            <div class="glass-card p-8 text-center w-full max-w-md">
+                <h1 class="text-3xl font-bold mb-2">Willkommen!</h1>
+                <p class="text-text-secondary mb-6">Dein persönlicher Begleiter durch die Schwangerschaft.</p>
+                <label for="lmp-date" class="block text-left mb-2 text-text-secondary">Bitte gib den ersten Tag deiner letzten Regelblutung an:</label>
+                <div class="relative mb-6">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <input type="date" id="lmp-date" class="w-full bg-transparent border border-glass-border rounded-lg p-3 pl-10 text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-violet">
+                </div>
+                <button id="start-btn" class="w-full btn-primary text-white font-bold py-3 px-4 rounded-lg">Los geht's</button>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="main-app" class="hidden">
+            <header class="text-center mb-6">
+                <h1 class="text-3xl font-bold text-white">Schwangerschafts-Begleiter</h1>
+            </header>
+
+            <!-- Dashboard -->
+            <section id="dashboard" class="glass-card p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 text-center">
+                        <p class="text-text-secondary">Aktuelle Woche</p>
+                        <h2 id="current-week" class="text-5xl font-bold"></h2>
+                        <p id="current-day-in-week" class="text-text-secondary"></p>
+                    </div>
+                    <div class="md:col-span-2 flex flex-col justify-center">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="text-center">
+                                <p id="baby-size" class="text-lg"></p>
+                                <p class="text-text-secondary text-sm">Dein Baby ist ca. so groß wie</p>
+                            </div>
+                            <div class="text-right">
+                                <p id="countdown" class="text-lg font-semibold"></p>
+                                <p class="text-text-secondary text-sm">bis zum errechneten Termin</p>
+                            </div>
+                        </div>
+                        <div class="w-full progress-bar-bg rounded-full h-2.5">
+                            <div id="progress-bar" class="progress-bar-fill h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-glass-border mt-6 pt-4 flex justify-between items-center text-sm">
+                    <div class="relative p-2 rounded-lg hover:bg-white/10 transition-colors">
+                        <p class="text-text-secondary text-xs">1. Tag d. letzten Regel</p>
+                        <div class="flex items-center gap-2 mt-1">
+                             <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span id="lmp-date-display-text" class="font-semibold text-base"></span>
+                        </div>
+                        <input type="date" id="lmp-date-display" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                    </div>
+                    <div class="text-right p-2">
+                        <p class="text-text-secondary text-xs">Errechneter Termin</p>
+                        <p id="due-date-display" class="font-semibold text-base mt-1"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Content -->
+            <main id="main-content">
+                <!-- Wochen-Info -->
+                <div id="wochen-info-content">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold mb-4 text-sky-300">Wochenübersicht</h3>
+                        <div id="week-grid" class="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2"></div>
+                    </div>
+                    <div id="week-detail-view" class="glass-card p-6 mt-6 hidden">
+                        <button id="back-to-grid" class="mb-4 text-sky-300">&larr; Zurück zur Übersicht</button>
+                        <h3 id="week-detail-title" class="text-2xl font-bold mb-4 text-sky-300"></h3>
+                        <div id="week-detail-content"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

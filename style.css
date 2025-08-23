@@ -38,17 +38,17 @@ body {
 
 .week-grid-item {
     transition: all 0.2s ease-in-out;
+    border: 1px solid var(--glass-border);
 }
 
-.week-grid-item.current {
-    background-color: var(--accent-violet);
-    color: white;
-    transform: scale(1.1);
-}
+/* Hebt die aktuelle Woche mit einer intensiveren Trimester-Farbe hervor */
+.week-grid-item.trimester-1.current { background-color: rgba(52, 152, 219, 0.3); }
+.week-grid-item.trimester-2.current { background-color: rgba(26, 188, 156, 0.3); }
+.week-grid-item.trimester-3.current { background-color: rgba(243, 156, 18, 0.3); }
 
-.week-grid-item.trimester-1 { border-left: 3px solid var(--accent-sky); }
-.week-grid-item.trimester-2 { border-left: 3px solid var(--accent-teal); }
-.week-grid-item.trimester-3 { border-left: 3px solid var(--accent-amber); }
+.week-grid-item.trimester-1 { background-color: rgba(52, 152, 219, 0.1); }
+.week-grid-item.trimester-2 { background-color: rgba(26, 188, 156, 0.1); }
+.week-grid-item.trimester-3 { background-color: rgba(243, 156, 18, 0.1); }
 
 .btn-primary {
     background-color: var(--accent-violet);

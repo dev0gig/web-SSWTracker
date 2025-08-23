@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Core Logic & Calculations ---
     const calculateDates = (lmp) => {
         const lmpDate = new Date(lmp);
-        const dueDate = new Date(lmpDate.getTime() + 280 * 24 * 60 * 60 * 1000);
+        const dueDate = new Date(lmpDate.getTime() + 277 * 24 * 60 * 60 * 1000); // Adjusted for doctor's date
         const today = new Date();
         today.setHours(0,0,0,0);
         
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const weeksRemaining = Math.floor(daysRemaining / 7);
         const daysInWeekRemaining = daysRemaining % 7;
 
-        const progress = Math.min(100, (daysPregnant / 280) * 100);
+        const progress = Math.min(100, (daysPregnant / 277) * 100); // Adjusted for doctor's date
 
         return {
             dueDate,
@@ -112,11 +112,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         countdownEl.textContent = `Noch ${weeksRemaining} Wo. & ${daysInWeekRemaining} Tg.`;
         
-        progressBar.style.width = `${progress}%`;
+        // Aktualisiere den Fortschrittsbalken und die Prozentanzeige
+        const roundedProgress = Math.round(progress);
+        progressBar.style.width = `${roundedProgress}%`;
+        progressBar.innerHTML = ''; // Remove inner text
+        
+        // Füge die Prozentanzeige außerhalb des Balkens hinzu
+        const progressText = document.getElementById('progress-text');
+        progressText.textContent = `${roundedProgress}%`;
         
         lmpDateDisplay.value = formatDateForInput(AppState.lmpDate);
-        lmpDateDisplayText.textContent = new Date(AppState.lmpDate).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        dueDateDisplay.textContent = dueDate.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+        lmpDateDisplayText.textContent = new Date(AppState.lmpDate).toLocaleDateString('de-AT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        dueDateDisplay.textContent = dueDate.toLocaleDateString('de-AT', { day: '2-digit', month: '2-digit', year: 'numeric' });
     };
 
     const renderWeekGrid = () => {
